@@ -1,8 +1,73 @@
 body {
-    background-color: burlywood;
+    background-color: #ccc;
 }
 
 .container {
     margin: 0 auto;
     width: fit-content;
+}
+
+table {
+    /* width: 100%; */
+    tr {
+        height: 150px;
+        td {
+            width: 150px;
+            border: 1px solid black;
+            background-color: blanchedalmond;
+            tr {
+                height: 45px;
+                td {
+                    width: 45px;
+                    cursor: pointer;
+
+                    &:hover {
+                        background-color: aquamarine;
+                    }
+                }
+            }
+        }
+
+
+
+        &:nth-child(1){
+            & > td {
+                &:nth-child(1) {
+                    border-width:  0 1px 1px 0;
+                }
+        
+                &:nth-child(2) {
+                    border-width:  0 1px 1px 1px;
+                }
+        
+                &:nth-child(3) {
+                    border-width:  0 0 1px 1px;
+                }
+            }
+        }
+        &:nth-child(2) {
+            & > td {
+                &:nth-child(1) {
+                    border-left-width: 0;
+                }
+                &:nth-child(3) {
+                    border-right-width: 0;
+                }
+            }
+        }
+
+        &:nth-child(3) {
+            & > td {
+                &:nth-child(1) {
+                    border-width: 1px 1px 0 0;
+                }
+                &:nth-child(2) {
+                    border-bottom-width: 0;
+                }
+                &:nth-child(3) {
+                    border-width: 1px 0  0 1px;
+                }
+            }
+        }
+    }
 }
