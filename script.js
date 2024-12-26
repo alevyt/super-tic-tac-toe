@@ -94,6 +94,21 @@ function cellClick(event) {
 
     if (hasParentWithClass(cell, 'active') && cell.innerHTML == ''){
         removeClassFromAll('active');
+        
+        
+
+        cell.innerHTML = currentPlayer;
+        cell.classList.add(currentPlayer === 'X' ? 'x' : 'o');
+        let result = checkWin(currentTable);
+        console.log(result);
+        if(result[0]){
+            currentTable.parentNode.classList.add(currentPlayer === 'X' ? 'x' : 'o');
+            currentTable.parentNode.innerHTML = currentPlayer;
+            win = false;
+        } else if(result[1]) {
+            currentTable.parentNode.classList.add('draw');
+        };
+
         let nextTable = document.getElementById('t' + cell.id[3] + cell.id[4]);
         if(nextTable) {
             nextTable.classList.add('active');
@@ -102,19 +117,6 @@ function cellClick(event) {
                 element.classList.add('active');
             })
         }
-
-        cell.innerHTML = currentPlayer;
-        cell.classList.add(currentPlayer === 'X' ? 'x' : 'o');
-        let result = checkWin(currentTable);
-        console.log(result);
-        if(result[0]){
-            console.log(currentTable.parentNode.classList)
-            currentTable.parentNode.classList.add(currentPlayer === 'X' ? 'x' : 'o');
-            currentTable.parentNode.innerHTML = currentPlayer;
-            win = false;
-        } else if(result[1]) {
-            currentTable.parentNode.classList.add('draw');
-        };
         currentPlayer = currentPlayer === 'X' ? '0' :'X';
         currentPlayerField.innerHTML = currentPlayer;
     }
