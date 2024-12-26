@@ -1,14 +1,13 @@
-console.log('script works!');
-
 let currentPlayer = 'X',
-    win  = false,
-    container = document.getElementById('container');
+    win  = false;
+const   container = document.getElementById('container'),
+        currentPlayerField = document.getElementById('currentPlayer'),
+        statusField = document.getElementById('status');
 
-    console.log(container);
-    
 function createCells () {
 
     let bigTable = document.createElement('table');
+    bigTable.id = 'bigTable';
 
     for (let i = 0; i < 3; i++){
         let row = document.createElement('tr');
@@ -19,11 +18,13 @@ function createCells () {
                 let innerRow = document.createElement('tr');
                 for (let l = 0; l < 3; l++) {
                     let innerCell = document.createElement('td');
-                    innerCell.id = 'c' + ((i*3) + (j + 1)) + k + l;
+                    innerCell.id = 'c' + i + j + k + l;
                     innerCell.onclick = cellClick;
                     innerRow.appendChild(innerCell);
                 }
                 smallTable.appendChild(innerRow);
+                smallTable.classList.add('active');
+                smallTable.id = 't' + i + j;
             }
             cell.appendChild(smallTable);
             row.appendChild(cell);
@@ -36,57 +37,92 @@ function createCells () {
 }
 
 function checkWin(table) {
-
-    const rows = table.rows; // Get all rows of the table
-    const tableArray = []; // Initialize the 2D array
+    
+    const rows = table.rows;
+    const tableArray = [];
+    let draw = true;
     
     for (let i = 0; i < rows.length; i++) {
-        const rowArray = []; // Array to hold cells of the current row
-        const cells = rows[i].cells; // Get all cells in the row
+        const rowArray = [];
+        const cells = rows[i].cells;
         
         for (let j = 0; j < cells.length; j++) {
-            rowArray.push(cells[j].innerHTML); // Add cell to the current row array
+            rowArray.push(cells[j].innerHTML);
+            if(cells[j].innerHTML == '') {
+                draw = false;
+            }
         }
         
-        tableArray.push(rowArray); // Add row array to the 2D table array
+        tableArray.push(rowArray);
     }
 
     for(let i = 0; i < 3; i++ ) {
         if((tableArray[0][i] == currentPlayer && tableArray[1][i] == currentPlayer && tableArray[2][i] == currentPlayer) ||(tableArray[i][0] == currentPlayer && tableArray[i][1] == currentPlayer && tableArray[i][2] == currentPlayer)){
             win = true;
-            return win;
+            return [win, draw];
         }
     }
 
     if((tableArray[0][0] == currentPlayer && tableArray[1][1] == currentPlayer && tableArray[2][2] == currentPlayer) || (tableArray[2][0] == currentPlayer && tableArray[1][1] == currentPlayer && tableArray[0][2] == currentPlayer)){
         win = true;
-        return win;
+        return [win, draw];
     }
 
+    return [win, draw];
+}
 
+function hasParentWithClass(element, className) {
+    while (element) {
+        if (element.classList && element.classList.contains(className)) {
+            return true;
+        }
+        element = element.parentElement;
+    }
+    return false;
+}
 
-    
-    console.log(tableArray); // Output the 2D array
-    return win;
-
+function removeClassFromAll(className) {
+    const elements = document.querySelectorAll(`.${className}`);
+    elements.forEach(element => {
+        element.classList.remove(className);
+    });
 }
 
 function cellClick(event) {
-    let cell = event.target;
+    let cell = event.target,
+        currentTable = cell.parentNode.parentNode;
 
-    
-    if (!win && cell.innerHTML == ''){
+    if (hasParentWithClass(cell, 'active') && cell.innerHTML == ''){
+        removeClassFromAll('active');
+        let nextTable = document.getElementById('t' + cell.id[3] + cell.id[4]);
+        if(nextTable) {
+            nextTable.classList.add('active');
+        } else {
+            document.querySelectorAll('td>table:not(.draw)').forEach(element => {
+                element.classList.add('active');
+            })
+        }
+
         cell.innerHTML = currentPlayer;
-        if(checkWin(cell.parentNode.parentNode)){
-          console.log(currentPlayer, ' wins');  
+        cell.classList.add(currentPlayer === 'X' ? 'x' : 'o');
+        let result = checkWin(currentTable);
+        console.log(result);
+        if(result[0]){
+            console.log(currentTable.parentNode.classList)
+            currentTable.parentNode.classList.add(currentPlayer === 'X' ? 'x' : 'o');
+            currentTable.parentNode.innerHTML = currentPlayer;
+            win = false;
+        } else if(result[1]) {
+            currentTable.parentNode.classList.add('draw');
         };
         currentPlayer = currentPlayer === 'X' ? '0' :'X';
+        currentPlayerField.innerHTML = currentPlayer;
     }
-    // console.log(currentPlayer);
+
 }
 
 createCells();
+currentPlayerField.innerHTML = currentPlayer;
+statusField.innerHTML = 'to move';
 
 
-
-// console.log(cells);

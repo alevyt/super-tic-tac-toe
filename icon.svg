@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="300" height="300">
+  <!-- Outer Grid -->
+  <rect x="0" y="0" width="300" height="300" fill="white" stroke="black" stroke-width="4" />
+  
+  <!-- Vertical Lines of Main Grid -->
+  <line x1="100" y1="0" x2="100" y2="300" stroke="black" stroke-width="2" />
+  <line x1="200" y1="0" x2="200" y2="300" stroke="black" stroke-width="2" />
+  
+  <!-- Horizontal Lines of Main Grid -->
+  <line x1="0" y1="100" x2="300" y2="100" stroke="black" stroke-width="2" />
+  <line x1="0" y1="200" x2="300" y2="200" stroke="black" stroke-width="2" />
+  
+  <!-- Inner Grid Cells -->
+  <g stroke="gray" stroke-width="1">
+    <!-- Vertical Inner Lines -->
+    <line x1="33" y1="0" x2="33" y2="100" />
+    <line x1="66" y1="0" x2="66" y2="100" />
+    <line x1="133" y1="0" x2="133" y2="100" transform="translate(100 0)" />
+    <line x1="166" y1="0" x2="166" y2="100" transform="translate(100 0)" />
+    <line x1="233" y1="0" x2="233" y2="100" transform="translate(200 0)" />
+    <line x1="266" y1="0" x2="266" y2="100" transform="translate(200 0)" />
+    
+    <!-- Horizontal Inner Lines -->
+    <line x1="0" y1="33" x2="100" y2="33" />
+    <line x1="0" y1="66" x2="100" y2="66" />
+    <line x1="0" y1="133" x2="100" y2="133" transform="translate(0 100)" />
+    <line x1="0" y1="166" x2="100" y2="166" transform="translate(0 100)" />
+    <line x1="0" y1="233" x2="100" y2="233" transform="translate(0 200)" />
+    <line x1="0" y1="266" x2="100" y2="266" transform="translate(0 200)" />
+  </g>
+  
+  <!-- Example X and O -->
+  <text x="50" y="70" font-size="24" font-family="Arial" fill="blue" text-anchor="middle">X</text>
+  <text x="150" y="170" font-size="24" font-family="Arial" fill="red" text-anchor="middle">O</text>
+  <text x="250" y="270" font-size="24" font-family="Arial" fill="blue" text-anchor="middle">X</text>
+</svg>
